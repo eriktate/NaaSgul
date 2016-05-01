@@ -1,0 +1,25 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "rk/QFSfmdW9TPNUWU6p5FUBIL3U=",
+			"path": "github.com/gorilla/context",
+			"revision": "a8d44e7d8e4d532b6a27a02dd82abb31cc1b01bd",
+			"revisionTime": "2016-04-22T13:42:37Z"
+		},
+		{
+			"checksumSHA1": "0LoLoRZ74dmfCg4HNPV/+0nh82E=",
+			"path": "github.com/gorilla/mux",
+			"revision": "0eeaf8392f5b04950925b8a69fe70f110fa7cbfc",
+			"revisionTime": "2016-03-17T21:34:30Z"
+		},
+		{
+			"checksumSHA1": "P7baREoG1OiJxZdSMvzpZ22zoQw=",
+			"path": "github.com/gorilla/websocket",
+			"revision": "1f512fc3f05332ba7117626cdfb4e07474e58e60",
+			"revisionTime": "2016-04-28T16:34:18Z"
+		}
+	],
+	"rootPath": "github.com/eriktate/NaaSgul"
+}
