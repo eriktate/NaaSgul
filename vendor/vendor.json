@@ -3,6 +3,12 @@
 	"ignore": "test",
 	"package": [
 		{
+			"checksumSHA1": "y1Dr6JQSS84U7X0a4NBE6UsEiWk=",
+			"path": "github.com/gopherjs/gopherjs/js",
+			"revision": "028c56b1a74aa0b24f8861f78bceafa5bbcd3eb8",
+			"revisionTime": "2016-04-30T23:27:50Z"
+		},
+		{
 			"checksumSHA1": "rk/QFSfmdW9TPNUWU6p5FUBIL3U=",
 			"path": "github.com/gorilla/context",
 			"revision": "a8d44e7d8e4d532b6a27a02dd82abb31cc1b01bd",
@@ -19,6 +25,96 @@
 			"path": "github.com/gorilla/websocket",
 			"revision": "1f512fc3f05332ba7117626cdfb4e07474e58e60",
 			"revisionTime": "2016-04-28T16:34:18Z"
+		},
+		{
+			"checksumSHA1": "VcR5ZBXeogG9PycizBURUU0LmXQ=",
+			"path": "github.com/jtolds/gls",
+			"revision": "8ddce2a84170772b95dd5d576c48d517b22cac63",
+			"revisionTime": "2016-01-05T22:08:40Z"
+		},
+		{
+			"checksumSHA1": "kg+yk3GiS678Sc6Xc+xrmGZRKxw=",
+			"path": "github.com/satori/go.uuid",
+			"revision": "f9ab0dce87d815821e221626b772e3475a0d2749",
+			"revisionTime": "2016-03-24T11:22:44Z"
+		},
+		{
+			"checksumSHA1": "H2ZvmkbJ9YyhyaVc3YSYVTJlNGU=",
+			"path": "github.com/smartystreets/assertions",
+			"revision": "40711f7748186bbf9c99977cd89f21ce1a229447",
+			"revisionTime": "2016-04-22T19:53:51Z"
+		},
+		{
+			"checksumSHA1": "D/geobFtKMvBIAONfT+4sie/PGk=",
+			"path": "github.com/smartystreets/assertions/internal/go-render/render",
+			"revision": "40711f7748186bbf9c99977cd89f21ce1a229447",
+			"revisionTime": "2016-04-22T19:53:51Z"
+		},
+		{
+			"checksumSHA1": "NtJsLMlKqou92xDHcAvu4KzQtek=",
+			"path": "github.com/smartystreets/assertions/internal/oglematchers",
+			"revision": "40711f7748186bbf9c99977cd89f21ce1a229447",
+			"revisionTime": "2016-04-22T19:53:51Z"
+		},
+		{
+			"checksumSHA1": "XAY0b/nKuRzoWdAbBS5sKet+5u0=",
+			"path": "github.com/smartystreets/goconvey",
+			"revision": "cc5d85f4f15bd2163abf0fe6e6753356dde72aa2",
+			"revisionTime": "2016-04-08T04:14:08Z"
+		},
+		{
+			"checksumSHA1": "Tm/GOrmVTe6k2F9ZZMp9vWAvzD4=",
+			"path": "github.com/smartystreets/goconvey/convey/gotest",
+			"revision": "cc5d85f4f15bd2163abf0fe6e6753356dde72aa2",
+			"revisionTime": "2016-04-08T04:14:08Z"
+		},
+		{
+			"checksumSHA1": "t3Kpg1pgZfUHTYUVSisBrXyPNXc=",
+			"path": "github.com/smartystreets/goconvey/convey/reporting",
+			"revision": "cc5d85f4f15bd2163abf0fe6e6753356dde72aa2",
+			"revisionTime": "2016-04-08T04:14:08Z"
+		},
+		{
+			"checksumSHA1": "RKJNhh6wA1EYtj8t9ctPv8ecbL0=",
+			"path": "github.com/smartystreets/goconvey/web/server/api",
+			"revision": "cc5d85f4f15bd2163abf0fe6e6753356dde72aa2",
+			"revisionTime": "2016-04-08T04:14:08Z"
+		},
+		{
+			"checksumSHA1": "jBj1FZ0fXQQZJO3GwSUKw7jHEAk=",
+			"path": "github.com/smartystreets/goconvey/web/server/contract",
+			"revision": "cc5d85f4f15bd2163abf0fe6e6753356dde72aa2",
+			"revisionTime": "2016-04-08T04:14:08Z"
+		},
+		{
+			"checksumSHA1": "wVE5+bEOa0RoxYBLAQ30wjrPMCA=",
+			"path": "github.com/smartystreets/goconvey/web/server/executor",
+			"revision": "cc5d85f4f15bd2163abf0fe6e6753356dde72aa2",
+			"revisionTime": "2016-04-08T04:14:08Z"
+		},
+		{
+			"checksumSHA1": "3TjBMDcfK2bw5HKX3WzJniAoYIs=",
+			"path": "github.com/smartystreets/goconvey/web/server/messaging",
+			"revision": "cc5d85f4f15bd2163abf0fe6e6753356dde72aa2",
+			"revisionTime": "2016-04-08T04:14:08Z"
+		},
+		{
+			"checksumSHA1": "5HCpUxhgCvgqfTTpA2zURAhGYqQ=",
+			"path": "github.com/smartystreets/goconvey/web/server/parser",
+			"revision": "cc5d85f4f15bd2163abf0fe6e6753356dde72aa2",
+			"revisionTime": "2016-04-08T04:14:08Z"
+		},
+		{
+			"checksumSHA1": "kJR1HN3mYXZ9rjHl5j5dP24pWkk=",
+			"path": "github.com/smartystreets/goconvey/web/server/system",
+			"revision": "cc5d85f4f15bd2163abf0fe6e6753356dde72aa2",
+			"revisionTime": "2016-04-08T04:14:08Z"
+		},
+		{
+			"checksumSHA1": "+04MxCNmtq63JO5rpxPRrNJXwf0=",
+			"path": "github.com/smartystreets/goconvey/web/server/watch",
+			"revision": "cc5d85f4f15bd2163abf0fe6e6753356dde72aa2",
+			"revisionTime": "2016-04-08T04:14:08Z"
 		}
 	],
 	"rootPath": "github.com/eriktate/NaaSgul"
