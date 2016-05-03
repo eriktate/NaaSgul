@@ -93,3 +93,40 @@ func TestGetters(t *testing.T) {
 		})
 	})
 }
+
+func TestSetters(t *testing.T) {
+	Convey("Given a valid Notification entity", t, func() {
+		notification := BuildNotification(uuid.NewV1(), "testing", "test body", Text, time.Now())
+
+		Convey("When attempting to set the notificationID with a UUID", func() {
+			id := uuid.NewV1()
+			notification.SetNotificationID(id)
+
+			Convey("Then the notificationID should be updated", func() {
+				So(notification.NotificationID(), ShouldEqual, id)
+			})
+		})
+
+		Convey("When attempting to build the notificationID", func() {
+			Convey("with a valid UUID string", func() {
+				id := "6ba7b810-9dad-11d1-80b4-00c04fd430c8"
+				err := notification.BuildNotificationID(id)
+
+				Convey("Then the notificationID should be updated and no errors returned", func() {
+					So(err, ShouldBeNil)
+					So(notification.NotificationID().String(), ShouldEqual, id)
+				})
+			})
+
+			Convey("with an invalid UUID string", func() {
+				id := "this is bad"
+				err := notification.BuildNotificationID(id)
+
+				Convey("Then the notificationID should not be updated and an error should be returned", func() {
+					So(err, ShouldNotBeNil)
+					So(notification.NotificationID(), ShouldNotEqual, id)
+				})
+			})
+		})
+	})
+}

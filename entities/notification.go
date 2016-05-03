@@ -82,12 +82,8 @@ func (n *Notification) SetNotificationID(notificationID uuid.UUID) {
 //BuildNotificationID attemps to set the notificationID of the Notification entity given a string representation of
 //a notificationId.
 func (n *Notification) BuildNotificationID(notificationID string) error {
-	id := &uuid.UUID{}
-	err := id.UnmarshalText([]byte(notificationID))
-
-	if err == nil {
-		n.notificationID = *id
-	}
+	var err error
+	n.notificationID, err = uuid.FromString(notificationID)
 	return err
 }
 
