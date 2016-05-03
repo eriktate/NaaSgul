@@ -128,5 +128,41 @@ func TestSetters(t *testing.T) {
 				})
 			})
 		})
+
+		Convey("When attempting to set the subject", func() {
+			subject := "new subject"
+			notification.SetSubject(subject)
+
+			Convey("Then the subject should be updated", func() {
+				So(notification.Subject(), ShouldEqual, subject)
+			})
+		})
+
+		Convey("When attempting to set the body", func() {
+			body := "new body"
+			notification.SetBody(body)
+
+			Convey("Then the body should be updated", func() {
+				So(notification.Body(), ShouldEqual, body)
+			})
+		})
+
+		Convey("When attempting to set the notificationType", func() {
+			notifType := HTML
+			notification.SetNotificationType(notifType)
+
+			Convey("Then the notificationType should be updated", func() {
+				So(notification.NotificationType(), ShouldEqual, notifType)
+			})
+		})
+
+		Convey("When attempting to set the createDate", func() {
+			createDate := time.Now()
+			notification.SetCreateDate(createDate)
+
+			Convey("Then the createDate should be updated", func() {
+				So(notification.CreateDate().Equal(createDate), ShouldBeTrue)
+			})
+		})
 	})
 }
