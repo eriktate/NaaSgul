@@ -37,16 +37,19 @@ func NewNotification(subject, body string, notificationType NotificationType) *N
 }
 
 //BuildNotification returns a Notification entity built from existing Notification data.
-func BuildNotification(notificationID uuid.UUID, subject, body string, notificationType NotificationType, createDate time.Time) *Notification {
+func BuildNotification(notificationID string, subject, body string, notificationType string, createDate time.Time) (*Notification, error) {
 	notification := &Notification{}
 
-	notification.SetNotificationID(notificationID)
+	if err := notification.BuildNotificationID(notificationID); err != nil {
+		return nil, err
+	}
+
 	notification.SetSubject(subject)
 	notification.SetBody(body)
-	notification.SetNotificationType(notificationType)
+	notification.SetNotificationType(NotificationType(notificationType))
 	notification.SetCreateDate(createDate)
 
-	return notification
+	return notification, nil
 }
 
 //NotificationID of the Notification entity.
