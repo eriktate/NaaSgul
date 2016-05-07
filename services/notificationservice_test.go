@@ -16,24 +16,46 @@ func TestNotificationService(t *testing.T) {
 		defer mockCtrl.Finish()
 		mockRepo := mocks.NewMockNotificationRepo(mockCtrl)
 
-		notificationService := NewNotificationService(mockrepo)
+		notificationService := NewNotificationService(mockRepo)
 
-		Convey("and a valid NotificationDTO", func() {
+		Convey("And a valid NotificationDTO", func() {
 			notificationDTO := &models.NotificationDTO{
-				NotificationID:   "c48feb4f-44c1-4e83-8b1b-fb1408f0db28",
 				Subject:          "Test",
 				Body:             "Test",
 				NotificationType: "text",
 				CreateDate:       time.Now(),
 			}
 
-			Convey("When we attempt to create a notification", func() {
-				entity := notificationDTO.ToEntity()
-				mockRepo.EXPECT().CreateNotification(gomock.Any()).Return(entity)
-				returnedEntity := notificationService.CreateNotification(notificationDTO)
+			newDTO := *notificationDTO
+			newDTO.NotificationID = "c48feb4f-44c1-4e83-8b1b-fb1408f0db28"
 
-				Convey("A notification entity should be created and passed to the NotificationRepo", func() {
-					So(returnedEntity, ShouldEqual, entity)
+			Convey("When we attempt to create a notification", func() {
+				mockRepo.EXPECT().CreateNotification(gomock.Any()).Return(&newDTO, nil)
+				returnedDTO, err := notificationService.CreateNotification(notificationDTO)
+
+				Convey("The NotificationRepo should be called and returned no errors", func() {
+					So(returnedDTO.NotificationID, ShouldEqual, newDTO.NotificationID)
+					So(err, ShouldBeNil)
+				})
+			})
+
+			Convey("and an invalid NotificationDTO", func() {
+				notificationDTO := &models.NotificationDTO{
+					NotificationID:   "bad ID",
+					Subject:          "Test",
+					Body:             "Test",
+					NotificationType: "text",
+					CreateDate:       time.Now(),
+				}
+
+				Convey("When we attempt to create a notification", func() {
+					mockRepo.EXPECT().CreateNotification(gomock.Any()).Return(notificationDTO, nil).MaxTimes(0)
+					returnedDTO, err := notificationService.CreateNotification(notificationDTO)
+
+					Convey("Then the NotificationRepo should not be called, the original DTO should be returned, and an error should be returned", func() {
+						So(returnedDTO, ShouldEqual, notificationDTO)
+						So(err, ShouldNotBeNil)
+					})
 				})
 			})
 		})

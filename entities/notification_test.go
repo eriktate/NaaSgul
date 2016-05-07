@@ -47,6 +47,23 @@ func TestCreatingNotifications(t *testing.T) {
 			})
 		})
 	})
+
+	Convey("Given a subject, body, notificationType, invalid notificationId and createDate", t, func() {
+		subject := "testing"
+		body := "test body"
+		notifType := "text"
+		notificationID := "bad id"
+		createDate := time.Now()
+
+		Convey("When we attempt to build a new Notification", func() {
+			notification, err := BuildNotification(notificationID, subject, body, notifType, createDate)
+
+			Convey("Then we should get an error back and a nil Notification", func() {
+				So(notification, ShouldBeNil)
+				So(err, ShouldNotBeNil)
+			})
+		})
+	})
 }
 
 func TestGetters(t *testing.T) {

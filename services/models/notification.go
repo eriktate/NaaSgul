@@ -17,7 +17,14 @@ type NotificationDTO struct {
 
 //ToEntity attempts to convert the NotificationDTO into a Notification entity.
 func (dto *NotificationDTO) ToEntity() (*entities.Notification, error) {
-	entity, err := entities.BuildNotification(dto.NotificationID, dto.Subject, dto.Body, dto.NotificationType, dto.CreateDate)
+	if len(dto.NotificationID) > 0 {
+		return entities.BuildNotification(dto.NotificationID, dto.Subject, dto.Body, dto.NotificationType, dto.CreateDate)
+	}
 
-	return entity, err
+	entity := &entities.Notification{}
+	entity.SetSubject(dto.Subject)
+	entity.SetBody(dto.Body)
+	entity.SetNotificationType(entities.NotificationType(dto.NotificationType))
+	entity.SetCreateDate(dto.CreateDate)
+	return entity, nil
 }

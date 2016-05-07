@@ -6,8 +6,8 @@ package mocks
 import (
 	entities "github.com/eriktate/NaaSgul/entities"
 	models "github.com/eriktate/NaaSgul/services/models"
-	go_uuid "github.com/eriktate/NaaSgul/vendor/github.com/satori/go.uuid"
 	gomock "github.com/golang/mock/gomock"
+	go_uuid "github.com/satori/go.uuid"
 )
 
 // Mock of NotificationRepo interface
