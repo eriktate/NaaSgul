@@ -30,12 +30,12 @@ func TestCreatingNotifications(t *testing.T) {
 	Convey("Given a subject, body, notificationType, notificationId and createDate", t, func() {
 		subject := "testing"
 		body := "test body"
-		notifType := Text
-		notificationID := uuid.NewV1()
+		notifType := "text"
+		notificationID := "c48feb4f-44c1-4e83-8b1b-fb1408f0db28"
 		createDate := time.Now()
 
 		Convey("When we attempt to build a new Notification", func() {
-			notification := BuildNotification(notificationID, subject, body, notifType, createDate)
+			notification, _ := BuildNotification(notificationID, subject, body, notifType, createDate)
 
 			Convey("Then an existing Notification entity should be returned", func() {
 				So(notification, ShouldNotBeNil)
@@ -51,7 +51,7 @@ func TestCreatingNotifications(t *testing.T) {
 
 func TestGetters(t *testing.T) {
 	Convey("Given a valid Notification entity", t, func() {
-		notification := BuildNotification(uuid.NewV1(), "testing", "test body", Text, time.Now())
+		notification, _ := BuildNotification(uuid.NewV1().String(), "testing", "test body", "text", time.Now())
 		Convey("When getting the NotificationID", func() {
 			notificationID := notification.NotificationID()
 
@@ -96,7 +96,7 @@ func TestGetters(t *testing.T) {
 
 func TestSetters(t *testing.T) {
 	Convey("Given a valid Notification entity", t, func() {
-		notification := BuildNotification(uuid.NewV1(), "testing", "test body", Text, time.Now())
+		notification, _ := BuildNotification(uuid.NewV1().String(), "testing", "test body", "text", time.Now())
 
 		Convey("When attempting to set the notificationID with a UUID", func() {
 			id := uuid.NewV1()
