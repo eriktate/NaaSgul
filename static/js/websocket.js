@@ -1,4 +1,4 @@
-var testSocket = new WebSocket("ws://localhost:1337/ws");
+var testSocket = new WebSocket("ws://api.naasgul.io/ws");
 
 testSocket.onopen = function(event) {
     testSocket.send("THIS IS A TEST!");

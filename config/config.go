@@ -12,7 +12,7 @@ func init() {
 	log.Println("Initializing viper context...")
 	viperContext = viper.New()
 
-	viperContext.SetEnvPrefix("NAASGUL")
+	viperContext.SetEnvPrefix("naasgul")
 	viperContext.AutomaticEnv()
 }
 

@@ -33,7 +33,7 @@ func main() {
 	host := config.GetServerHost()
 	port := config.GetServerPort()
 
-	log.Println("Starting server...")
+	log.Printf("Starting server on %s:%s...", host, port)
 	log.Panic(http.ListenAndServe(fmt.Sprintf("%s:%s", host, port), router))
 }
 
