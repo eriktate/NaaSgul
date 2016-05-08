@@ -15,6 +15,17 @@ type NotificationDTO struct {
 	CreateDate       time.Time `json:"createDate"`
 }
 
+//BuildNotificationDTOFromEntity returns the DTO representation of the given Notification entity.
+func BuildNotificationDTOFromEntity(entity *entities.Notification) *NotificationDTO {
+	return &NotificationDTO{
+		NotificationID:   entity.NotificationID().String(),
+		Subject:          entity.Subject(),
+		Body:             entity.Body(),
+		NotificationType: string(entity.NotificationType()),
+		CreateDate:       entity.CreateDate(),
+	}
+}
+
 //ToEntity attempts to convert the NotificationDTO into a Notification entity.
 func (dto *NotificationDTO) ToEntity() (*entities.Notification, error) {
 	if len(dto.NotificationID) > 0 {
