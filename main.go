@@ -2,9 +2,11 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 
+	"github.com/eriktate/NaaSgul/config"
 	"github.com/gorilla/mux"
 	"github.com/gorilla/websocket"
 )
@@ -28,7 +30,11 @@ func main() {
 	router.Methods("POST").Path("/api/notification").HandlerFunc(notificationHandler)
 	router.PathPrefix("/").Handler(http.FileServer(http.Dir("static")))
 
-	log.Panic(http.ListenAndServe("localhost:1337", router))
+	host := config.GetServerHost()
+	port := config.GetServerPort()
+
+	log.Println("Starting server...")
+	log.Panic(http.ListenAndServe(fmt.Sprintf("%s:%s", host, port), router))
 }
 
 func basicHandler(w http.ResponseWriter, r *http.Request) {
