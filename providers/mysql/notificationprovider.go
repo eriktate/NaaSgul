@@ -2,7 +2,6 @@ package mysql
 
 import (
 	"fmt"
-	"log"
 
 	"github.com/eriktate/NaaSgul/config"
 	"github.com/eriktate/NaaSgul/entities"
@@ -13,26 +12,6 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
-var db *sqlx.DB
-
-//Connect establishes communication with the mysql data source.
-func Connect(connectionString string) error {
-	var err error
-	log.Println("Connecting to mysql...")
-	db, err = sqlx.Connect("mysql", connectionString)
-	if err != nil {
-		return err
-	}
-
-	log.Println("Successfully connected to mysql!")
-	return nil
-}
-
-//GetDatabaseConnection returns the database struct created upon connection.
-func GetDatabaseConnection() *sqlx.DB {
-	return db
-}
-
 //NotificationProvider is a struct that provides access to Noti
 type NotificationProvider struct {
 	db *sqlx.DB
@@ -40,7 +19,7 @@ type NotificationProvider struct {
 
 //NewNotificationProvider returns a notification provider which fulfilles the NotificationRepo interface. If a mysql
 //connection has not already been established, it will attempt to create one.
-func NewNotificationProvider(user, password, host, port, database string) (*NotificationProvider, error) {
+func NewNotificationProvider() (*NotificationProvider, error) {
 	if db != nil {
 		return &NotificationProvider{db}, nil
 	}
@@ -77,4 +56,15 @@ func (np *NotificationProvider) CreateNotification(notification *entities.Notifi
 	}
 
 	return models.BuildNotificationDTOFromEntity(notification), nil
+}
+
+//TODO: Need to implement this.
+func (np *NotificationProvider) GetNotificationByID(id uuid.UUID) (*models.NotificationDTO, error) {
+	return &models.NotificationDTO{}, nil
+}
+
+//TODO: Need to implement this.
+func (np *NotificationProvider) GetNotificationsBySubject(subject string) []*models.NotificationDTO {
+	notifications := make([]*models.NotificationDTO, 2)
+	return notifications
 }
