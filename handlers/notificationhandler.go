@@ -21,12 +21,13 @@ func InitNotificationHandler(repo services.NotificationRepo, subRouter *mux.Rout
 
 //This is where all routes for the notification resource are defined.
 func initRouter(router *mux.Router) {
-	router.Methods("POST").HandlerFunc(createNotification)
-	router.Methods("GET").Path("/{id}").HandlerFunc(getNotificationByID)
-	router.Methods("GET").HandlerFunc(getNotifications)
+	router.Methods("POST").HandlerFunc(CreateNotification)
+	router.Methods("GET").Path("/{id}").HandlerFunc(GetNotificationByID)
+	router.Methods("GET").HandlerFunc(GetNotifications)
 }
 
-func createNotification(w http.ResponseWriter, r *http.Request) {
+//CreateNotification handles requests to create a new Notification.
+func CreateNotification(w http.ResponseWriter, r *http.Request) {
 	decoder := json.NewDecoder(r.Body)
 	notification := &models.NotificationDTO{}
 
@@ -54,7 +55,8 @@ func createNotification(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, response)
 }
 
-func getNotificationByID(w http.ResponseWriter, r *http.Request) {
+//GetNotificationByID handles requests for retrieving a specific Notification by their NotificationID.
+func GetNotificationByID(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 
 	notification, err := notificationService.GetNotificationByID(vars["id"])
@@ -72,7 +74,9 @@ func getNotificationByID(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, response)
 }
 
-func getNotifications(w http.ResponseWriter, r *http.Request) {
+//GetNotifications catchs all GET requests to the /notifications resource. This handler is responsible for grabbing
+//querystring parameters and building the proper request based on consumer supplied information.
+func GetNotifications(w http.ResponseWriter, r *http.Request) {
 	vars := r.URL.Query()
 	var notifications []*models.NotificationDTO
 	var err error
