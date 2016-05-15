@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
 
 	"github.com/eriktate/NaaSgul/services"
@@ -20,7 +21,9 @@ func InitNotificationHandler(repo services.NotificationRepo, subRouter *mux.Rout
 
 //This is where all routes for the notification resource are defined.
 func initRouter(router *mux.Router) {
-	router.Methods("POST").Path("/").HandlerFunc(createNotification)
+	router.Methods("POST").HandlerFunc(createNotification)
+	router.Methods("GET").Path("/{id}").HandlerFunc(getNotificationByID)
+	router.Methods("GET").HandlerFunc(getNotifications)
 }
 
 func createNotification(w http.ResponseWriter, r *http.Request) {
@@ -30,8 +33,76 @@ func createNotification(w http.ResponseWriter, r *http.Request) {
 	err := decoder.Decode(notification)
 
 	if err != nil {
-		http.Error(w, "Failed to create notification", http.StatusConflict)
+		http.Error(w, "Failed to create notification: "+err.Error(), http.StatusBadRequest)
+		return
 	}
 
-	notificationService.CreateNotification(notification)
+	newNotification, err := notificationService.CreateNotification(notification)
+
+	if err != nil {
+		http.Error(w, "Failed to create notification: "+err.Error(), http.StatusConflict)
+		return
+	}
+
+	response, err := json.Marshal(newNotification)
+
+	if err != nil {
+		http.Error(w, "Failed to return new notification: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	writeJSON(w, response)
+}
+
+func getNotificationByID(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+
+	notification, err := notificationService.GetNotificationByID(vars["id"])
+
+	if err != nil {
+		http.Error(w, "Failed to retreive notification: "+err.Error(), http.StatusNotFound)
+		return
+	}
+
+	response, err := json.Marshal(notification)
+	if err != nil {
+		http.Error(w, "Failed to retrieve notification: "+err.Error(), http.StatusInternalServerError)
+	}
+
+	writeJSON(w, response)
+}
+
+func getNotifications(w http.ResponseWriter, r *http.Request) {
+	vars := r.URL.Query()
+	var notifications []*models.NotificationDTO
+	var err error
+
+	if subjects, ok := vars["subject"]; ok {
+		notifications, err = notificationService.GetNotificationsBySubject(subjects[0])
+	} else {
+		log.Println("No subject supplied")
+	}
+
+	if err != nil {
+		log.Println("Failed to retrive notifications: ", err)
+		http.Error(w, "Failed to retrieve notification(s): "+err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	response, err := json.Marshal(notifications)
+
+	if err != nil {
+		http.Error(w, "Failed to retrieve notification(s)"+err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	writeJSON(w, response)
+}
+
+//Temporary until I come up with a more standard way to respond with preset headers.
+func writeJSON(w http.ResponseWriter, data []byte) {
+	w.Header().Add("Content-Type", "application/json")
+	w.Header().Add("Accept", "application/json")
+
+	w.Write(data)
 }

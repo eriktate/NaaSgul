@@ -2,6 +2,7 @@ package mysql
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/eriktate/NaaSgul/config"
 	"github.com/eriktate/NaaSgul/entities"
@@ -30,6 +31,8 @@ func NewNotificationProvider() (*NotificationProvider, error) {
 	listenPort := config.GetMysqlPort()
 	dbname := config.GetMysqlDatabase()
 
+	log.Printf("Connecting to Notification Provider: %s:%s@(%s:%s)/%s", username, pword, hostname, listenPort, dbname)
+
 	connectionString := fmt.Sprintf("%s:%s@(%s:%s)/%s", username, pword, hostname, listenPort, dbname)
 	err := Connect(connectionString)
 
@@ -48,7 +51,7 @@ func (np *NotificationProvider) CreateNotification(notification *entities.Notifi
 	notification.SetNotificationID(uuid.NewV1())
 
 	tx := db.MustBegin()
-	tx.MustExec("call create_notification(%s, %s, %s, %d, %d)", notification.NotificationID(), notification.Subject(), notification.Body(), notification.NotificationType(), notification.CreateDate())
+	tx.MustExec("call create_notification(?, ?, ?, ?, ?);", notification.NotificationID().String(), notification.Subject(), notification.Body(), string(notification.NotificationType()), notification.CreateDate())
 	err := tx.Commit()
 
 	if err != nil {
@@ -58,13 +61,24 @@ func (np *NotificationProvider) CreateNotification(notification *entities.Notifi
 	return models.BuildNotificationDTOFromEntity(notification), nil
 }
 
-//TODO: Need to implement this.
+//GetNotificationByID returns the existing Notification associated with the given UUID.
 func (np *NotificationProvider) GetNotificationByID(id uuid.UUID) (*models.NotificationDTO, error) {
-	return &models.NotificationDTO{}, nil
+	notification := &models.NotificationDTO{}
+
+	tx := db.MustBegin()
+	tx.Get(notification, "call get_notification_by_id(?);", id.String())
+	err := tx.Commit()
+
+	return notification, err
 }
 
-//TODO: Need to implement this.
+//GetNotificationsBySubject returns a list of Notifications that have subjects containing the given string.
 func (np *NotificationProvider) GetNotificationsBySubject(subject string) []*models.NotificationDTO {
-	notifications := make([]*models.NotificationDTO, 2)
+	notifications := []*models.NotificationDTO{}
+
+	tx := db.MustBegin()
+	tx.Select(&notifications, "call get_notifications_by_subject(?);", subject)
+	tx.Commit()
+
 	return notifications
 }

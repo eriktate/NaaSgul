@@ -6,7 +6,6 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/eriktate/NaaSgul/comproot"
 	"github.com/eriktate/NaaSgul/config"
 	"github.com/eriktate/NaaSgul/handlers"
 	"github.com/gorilla/mux"
@@ -27,9 +26,8 @@ func main() {
 	wsMap = make(map[int]*websocket.Conn)
 
 	router := mux.NewRouter()
-
+	handlers.InitNotificationHandler(NotificationProvider(), router.PathPrefix("/api/notification").Subrouter())
 	router.HandleFunc("/ws", WsHandler)
-	handlers.InitNotificationHandler(comproot.NotificationProvider(), router.PathPrefix("/api/notification").Subrouter())
 	router.PathPrefix("/").Handler(http.FileServer(http.Dir("static")))
 
 	host := config.GetServerHost()

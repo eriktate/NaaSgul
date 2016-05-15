@@ -1,4 +1,4 @@
-package comproot
+package main
 
 import (
 	"log"
@@ -14,6 +14,7 @@ func NotificationProvider() services.NotificationRepo {
 	provider, err := mysql.NewNotificationProvider()
 
 	if err != nil {
+		log.Println(err)
 		log.Fatalln("Can not create a NotificationProvider")
 	}
 
