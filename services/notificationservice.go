@@ -2,6 +2,7 @@ package services
 
 import (
 	"errors"
+	"log"
 
 	"github.com/eriktate/NaaSgul/entities"
 	"github.com/eriktate/NaaSgul/services/models"
@@ -32,7 +33,7 @@ func (service *NotificationService) CreateNotification(notification *models.Noti
 	if err != nil {
 		return notification, err
 	}
-
+	log.Println("Created notification")
 	return service.repo.CreateNotification(entity)
 }
 
@@ -53,7 +54,16 @@ func (service *NotificationService) GetNotificationByID(notificationID interface
 		return nil, errors.New("GetNotificationByID must be passed a string or a UUID")
 	}
 
-	return service.repo.GetNotificationByID(id)
+	response, err := service.repo.GetNotificationByID(id)
+
+	if err != nil {
+		log.Printf("Failed to retrieve Notification: %s", notificationID)
+		log.Printf("Error message: %s", err)
+	} else {
+		log.Printf("Retrieved Notification: %s", response.NotificationID)
+	}
+
+	return response, err
 }
 
 //GetNotificationsBySubject will search for all notifications that have a subject containing the given string (string

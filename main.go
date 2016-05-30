@@ -2,9 +2,12 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 
+	"github.com/eriktate/NaaSgul/config"
+	"github.com/eriktate/NaaSgul/handlers"
 	"github.com/gorilla/mux"
 	"github.com/gorilla/websocket"
 )
@@ -23,12 +26,15 @@ func main() {
 	wsMap = make(map[int]*websocket.Conn)
 
 	router := mux.NewRouter()
-
+	handlers.InitNotificationHandler(NotificationProvider(), router.PathPrefix("/api/notification").Subrouter())
 	router.HandleFunc("/ws", WsHandler)
-	router.Methods("POST").Path("/api/notification").HandlerFunc(notificationHandler)
 	router.PathPrefix("/").Handler(http.FileServer(http.Dir("static")))
 
-	log.Panic(http.ListenAndServe("localhost:1337", router))
+	host := config.GetServerHost()
+	port := config.GetServerPort()
+
+	log.Printf("Starting server on %s:%s...", host, port)
+	log.Panic(http.ListenAndServe(fmt.Sprintf("%s:%s", host, port), router))
 }
 
 func basicHandler(w http.ResponseWriter, r *http.Request) {
