@@ -4,9 +4,9 @@ package models
 type PushNotification struct {
 	Notification
 
-	SubscriberID        string `json:"subscriberId"`
-	SubsceriverClientID string `json:"subscriberClientId"`
-	HasBeenSeen         bool   `json:"hasBeenSeen"`
+	SubscriberID       string `json:"subscriberId"`
+	SubscriberClientID string `json:"subscriberClientId"`
+	HasBeenSeen        bool   `json:"hasBeenSeen"`
 }
 
 //NewPushNotification creates a new PushNotification model given a valid notification model and a subscriber ID.
