@@ -6,8 +6,8 @@ import (
 	"github.com/eriktate/NaaSgul/entities"
 )
 
-//NotificationDTO is a data transfer object for entities.Notification
-type NotificationDTO struct {
+//Notification is a data transfer object for entities.Notification
+type Notification struct {
 	NotificationID   string    `json:"notificationID" db:"NotificationId"`
 	Subject          string    `json:"subject" db:"Subject"`
 	Body             string    `json:"body" db:"Body"`
@@ -15,8 +15,8 @@ type NotificationDTO struct {
 	CreateDate       time.Time `json:"createDate" db:"CreateDate"`
 }
 
-//BuildNotificationDTOFromEntity returns the DTO representation of the given Notification entity.
-func BuildNotificationDTOFromEntity(entity *entities.Notification) *NotificationDTO {
+//BuildNotificationFromEntity returns the DTO representation of the given Notification entity.
+func BuildNotificationFromEntity(entity *entities.Notification) *Notification {
 	return &NotificationDTO{
 		NotificationID:   entity.NotificationID().String(),
 		Subject:          entity.Subject(),
@@ -27,7 +27,7 @@ func BuildNotificationDTOFromEntity(entity *entities.Notification) *Notification
 }
 
 //ToEntity attempts to convert the NotificationDTO into a Notification entity.
-func (dto *NotificationDTO) ToEntity() (*entities.Notification, error) {
+func (dto *Notification) ToEntity() (*entities.Notification, error) {
 	if len(dto.NotificationID) > 0 {
 		return entities.BuildNotification(dto.NotificationID, dto.Subject, dto.Body, dto.NotificationType, dto.CreateDate)
 	}
