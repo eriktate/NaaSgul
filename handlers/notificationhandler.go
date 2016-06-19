@@ -29,7 +29,7 @@ func initRouter(router *mux.Router) {
 //CreateNotification handles requests to create a new Notification.
 func CreateNotification(w http.ResponseWriter, r *http.Request) {
 	decoder := json.NewDecoder(r.Body)
-	notification := &models.NotificationDTO{}
+	notification := &models.Notification{}
 
 	err := decoder.Decode(notification)
 
@@ -78,7 +78,7 @@ func GetNotificationByID(w http.ResponseWriter, r *http.Request) {
 //querystring parameters and building the proper request based on consumer supplied information.
 func GetNotifications(w http.ResponseWriter, r *http.Request) {
 	vars := r.URL.Query()
-	var notifications []*models.NotificationDTO
+	var notifications []*models.Notification
 	var err error
 
 	if subjects, ok := vars["subject"]; ok {

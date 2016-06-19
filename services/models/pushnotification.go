@@ -1,18 +1,19 @@
 package models
 
-//PushNotificationDTO represents a new notification that should be sent to a given subscriber.
-type PushNotificationDTO struct {
-	NotificationDTO
+//PushNotification represents a new notification that should be sent to a given subscriber.
+type PushNotification struct {
+	Notification
 
-	SubscriberID string `json:"subscriberId" db:"subscriber_id"`
-	HasBeenSeen  bool   `json:"hasBeenSeen" db:"has_been_seen"`
+	SubscriberID        string `json:"subscriberId"`
+	SubsceriverClientID string `json:"subscriberClientId"`
+	HasBeenSeen         bool   `json:"hasBeenSeen"`
 }
 
-//NewPushNotificationDTO creates a new push notification given a valid notificationDTO and a subscriber ID.
-func NewPushNotificationDTO(notification NotificationDTO, subID string) *PushNotificationDTO {
-	return &PushNotificationDTO{
-		NotificationDTO: notification,
-		SubscriberID:    subID,
-		HasBeenSeen:     false,
+//NewPushNotification creates a new PushNotification model given a valid notification model and a subscriber ID.
+func NewPushNotification(notification Notification, subID string) *PushNotification {
+	return &PushNotification{
+		Notification: notification,
+		SubscriberID: subID,
+		HasBeenSeen:  false,
 	}
 }

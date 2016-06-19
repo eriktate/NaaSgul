@@ -27,13 +27,13 @@ func BuildNotificationFromEntity(entity *entities.Notification) *Notification {
 	}
 }
 
-//ToServiceModel converts NotificationDTO provider model
-func (n *Notification) ToServiceModel(models.Notification) {
+//ToServiceModel converts Notification provider model into a service model.
+func (n *Notification) ToServiceModel() *models.Notification {
 	return &models.Notification{
 		NotificationID:   n.NotificationID,
 		NotificationType: n.NotificationType,
 		Subject:          n.Subject,
 		Body:             n.Body,
-		CreateDate:       time.Unix(CreateDate, 0),
+		CreateDate:       time.Unix(n.CreateDate, 0),
 	}
 }
