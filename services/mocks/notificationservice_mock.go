@@ -31,9 +31,9 @@ func (_m *MockNotificationRepo) EXPECT() *_MockNotificationRepoRecorder {
 	return _m.recorder
 }
 
-func (_m *MockNotificationRepo) CreateNotification(_param0 *entities.Notification) (*models.NotificationDTO, error) {
+func (_m *MockNotificationRepo) CreateNotification(_param0 *entities.Notification) (*models.Notification, error) {
 	ret := _m.ctrl.Call(_m, "CreateNotification", _param0)
-	ret0, _ := ret[0].(*models.NotificationDTO)
+	ret0, _ := ret[0].(*models.Notification)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -42,9 +42,9 @@ func (_mr *_MockNotificationRepoRecorder) CreateNotification(arg0 interface{}) *
 	return _mr.mock.ctrl.RecordCall(_mr.mock, "CreateNotification", arg0)
 }
 
-func (_m *MockNotificationRepo) GetNotificationByID(_param0 go_uuid.UUID) (*models.NotificationDTO, error) {
+func (_m *MockNotificationRepo) GetNotificationByID(_param0 go_uuid.UUID) (*models.Notification, error) {
 	ret := _m.ctrl.Call(_m, "GetNotificationByID", _param0)
-	ret0, _ := ret[0].(*models.NotificationDTO)
+	ret0, _ := ret[0].(*models.Notification)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -53,9 +53,9 @@ func (_mr *_MockNotificationRepoRecorder) GetNotificationByID(arg0 interface{}) 
 	return _mr.mock.ctrl.RecordCall(_mr.mock, "GetNotificationByID", arg0)
 }
 
-func (_m *MockNotificationRepo) GetNotificationsBySubject(_param0 string) []*models.NotificationDTO {
+func (_m *MockNotificationRepo) GetNotificationsBySubject(_param0 string) []*models.Notification {
 	ret := _m.ctrl.Call(_m, "GetNotificationsBySubject", _param0)
-	ret0, _ := ret[0].([]*models.NotificationDTO)
+	ret0, _ := ret[0].([]*models.Notification)
 	return ret0
 }
 

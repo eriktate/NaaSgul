@@ -6,12 +6,15 @@ import (
 
 	"github.com/eriktate/NaaSgul/config"
 	"github.com/eriktate/NaaSgul/entities"
-	"github.com/eriktate/NaaSgul/services/models"
+	"github.com/eriktate/NaaSgul/providers/mysql/models"
+	sm "github.com/eriktate/NaaSgul/services/models"
 	"github.com/satori/go.uuid"
 	//Need to do a blank import for sqlx
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
 )
+
+//IMPORTANT NOTE: Service models are referenced through the "sm" alias as seen in the imports above.
 
 //NotificationProvider is a struct that provides access to Noti
 type NotificationProvider struct {
@@ -46,7 +49,7 @@ func NewNotificationProvider() (*NotificationProvider, error) {
 //CreateNotification adds a notification record given a Notification entity. The UUID is generated in the provider
 //instead of the entity constructor to help reduce confusion about whether or not a Notification already exists in the
 //database.
-func (np *NotificationProvider) CreateNotification(notification *entities.Notification) (*models.NotificationDTO, error) {
+func (np *NotificationProvider) CreateNotification(notification *entities.Notification) (*sm.Notification, error) {
 	//TODO: Need to verify which UUID generation function fits best.
 	notification.SetNotificationID(uuid.NewV1())
 
@@ -58,27 +61,33 @@ func (np *NotificationProvider) CreateNotification(notification *entities.Notifi
 		return nil, err
 	}
 
-	return models.BuildNotificationDTOFromEntity(notification), nil
+	return sm.BuildNotificationFromEntity(notification), nil
 }
 
 //GetNotificationByID returns the existing Notification associated with the given UUID.
-func (np *NotificationProvider) GetNotificationByID(id uuid.UUID) (*models.NotificationDTO, error) {
-	notification := &models.NotificationDTO{}
+func (np *NotificationProvider) GetNotificationByID(id uuid.UUID) (*sm.Notification, error) {
+	notification := &models.Notification{}
 
 	tx := db.MustBegin()
 	tx.Get(notification, "call get_notification_by_id(?);", id.String())
 	err := tx.Commit()
 
-	return notification, err
+	return notification.ToServiceModel(), err
 }
 
 //GetNotificationsBySubject returns a list of Notifications that have subjects containing the given string.
-func (np *NotificationProvider) GetNotificationsBySubject(subject string) []*models.NotificationDTO {
-	notifications := []*models.NotificationDTO{}
+func (np *NotificationProvider) GetNotificationsBySubject(subject string) []*sm.Notification {
+	notifications := []*models.Notification{}
 
 	tx := db.MustBegin()
 	tx.Select(&notifications, "call get_notifications_by_subject(?);", subject)
 	tx.Commit()
 
-	return notifications
+	serviceNotifications := make([]*sm.Notification, len(notifications))
+
+	for _, value := range notifications {
+		serviceNotifications = append(serviceNotifications, value.ToServiceModel())
+	}
+
+	return serviceNotifications
 }

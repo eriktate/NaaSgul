@@ -9,11 +9,11 @@ import (
 	"github.com/satori/go.uuid"
 )
 
-//NotificationRepo is an interface that defines what a notification data source should look like.
+//NotificationRepo is an interface that defines what a notification repository should look like.
 type NotificationRepo interface {
-	CreateNotification(notification *entities.Notification) (*models.NotificationDTO, error)
-	GetNotificationByID(id uuid.UUID) (*models.NotificationDTO, error)
-	GetNotificationsBySubject(subject string) []*models.NotificationDTO
+	CreateNotification(notification *entities.Notification) (*models.Notification, error)
+	GetNotificationByID(id uuid.UUID) (*models.Notification, error)
+	GetNotificationsBySubject(subject string) []*models.Notification
 }
 
 //NotificationService exposes functions for interacting with notification data.
@@ -27,8 +27,8 @@ func NewNotificationService(repo NotificationRepo) *NotificationService {
 }
 
 //CreateNotification handles all requests for creating new notifications. To help with debugging, when errors occur
-//the service will also return the original NotificationDTO it was given.
-func (service *NotificationService) CreateNotification(notification *models.NotificationDTO) (*models.NotificationDTO, error) {
+//the service will also return the original Notification it was given.
+func (service *NotificationService) CreateNotification(notification *models.Notification) (*models.Notification, error) {
 	entity, err := notification.ToEntity()
 	if err != nil {
 		return notification, err
@@ -39,7 +39,7 @@ func (service *NotificationService) CreateNotification(notification *models.Noti
 
 //GetNotificationByID accepts either a string or UUID representation of a NotificationID. If the string is invalid or
 //you pass some other type, then an error is returned.
-func (service *NotificationService) GetNotificationByID(notificationID interface{}) (*models.NotificationDTO, error) {
+func (service *NotificationService) GetNotificationByID(notificationID interface{}) (*models.Notification, error) {
 	var id uuid.UUID
 	if result, ok := notificationID.(string); ok {
 		var err error
@@ -68,7 +68,7 @@ func (service *NotificationService) GetNotificationByID(notificationID interface
 
 //GetNotificationsBySubject will search for all notifications that have a subject containing the given string (string
 //length must be 5 characters or more).
-func (service *NotificationService) GetNotificationsBySubject(subject string) ([]*models.NotificationDTO, error) {
+func (service *NotificationService) GetNotificationsBySubject(subject string) ([]*models.Notification, error) {
 	if len(subject) < 5 {
 		return nil, errors.New("GetNOtificationsBySubject must be given a subject 5 characters or longer")
 	}
