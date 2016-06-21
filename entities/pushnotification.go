@@ -3,7 +3,7 @@ package entities
 import "github.com/satori/go.uuid"
 
 type PushNotification struct {
-	Notification
+	*Notification
 
 	subscriberID       uuid.UUID
 	subscriberClientID string
@@ -12,12 +12,12 @@ type PushNotification struct {
 
 //NewPushNotification returns a pointer to a new PushNotification entity. In order to create a PushNotification, you need at least a Notification entity.
 //Depending on the type of operation that the entity will be used for, either the subscriberID or the subscriberClientID will also need set.
-func NewPushNotification(notification Notification) *PushNotification {
+func NewPushNotification(notification *Notification) *PushNotification {
 	return &PushNotification{Notification: notification}
 }
 
 //SetNotification sets the embedded Notification entity.
-func (pn *PushNotification) SetNotification(notification Notification) {
+func (pn *PushNotification) SetNotification(notification *Notification) {
 	pn.Notification = notification
 }
 
