@@ -1,0 +1,20 @@
+Notes should be treated as a continuous stream of data that 
+can be subscribed to. They have the added benefit of keeping
+track of whether or not a given subscriber has seen them
+yet. This effectively means that naasgul manages individual
+message queues for each of its subscribers.
+
+Subscribers should be able to ask for their unread notes, and some defined number
+of historical notes that have been read. By default, notes should be considered 
+fairly volatile and can not be guaranteed to live beyond 30 days.
+
+Subscribers to naasgul, with the correct permissions, should be allowed to push
+notes to any number of other subscribers (provided they can identify them all).
+
+Notes should be flexible enough in format to allow for as many use cases as possible
+in the space of real time messaging.
+
+A Note should have a sender, a sent date (created date?), payload of some sort.
+
+There should be some kind of allowance for groupings of subscribers and, potentially,
+groupings of groups.

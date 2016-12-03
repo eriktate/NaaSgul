@@ -1,0 +1,48 @@
+As a client,
+I want to send notes to subscribers
+So I can communicate with my users.
+
+As a client,
+I want to assign my own identifiers to my subscribers
+So that I can integrate easily with my existing systems
+
+As a user,
+I want to receive my notes in real time
+So that I don't have to do anything (e.g. refresh) to
+receive them.
+
+As a client,
+I want to group my subscribers
+So that I can easily push notes to all of them.
+
+As a client,
+I want to create conversations between subscribers
+So that they can talk to eachother or me.
+
+As a client,
+I want conversations to be persistant
+So that a subscriber can resume their conversations.
+
+As a client,
+I want to send different types of payloads
+So that notes can be virtually anything.
+
+As a user,
+I want to easily tell which notes are unread
+So that I can focus on the new information.
+
+As a client,
+I want a dashboard of usage
+So that I can see how close I am to hitting my band limits.
+
+As a client,
+I want easy to integrate clients
+So that I can get up and running without writing much code.
+
+As a client,
+I want to be able to schedule notes to go out
+So that I can have greater control over my users' experience.
+
+As a client,
+I want to be able to view/audit historical notes sent
+So that I can check for quality and accuracy.
