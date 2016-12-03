@@ -57,6 +57,12 @@ type NoteReader interface {
 	GetForSub(SubID) ([]*Note, error) // Get all notes for a given Sub.
 }
 
+// SubService is the API for working with Subs.
+type SubService interface {
+	Create(*Sub) (*Sub, error)
+	Get(SubID) (*Sub, error)
+}
+
 // NewNote constructs a new Note entity and returns its pointer.
 func NewNote(noteType string, payload []byte, sendAt *time.Time) *Note {
 	return &Note{
